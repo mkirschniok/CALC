@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CALC.Operator">
+    <Grid>
+        <Grid.GestureRecognizers>
+            <SwipeGestureRecognizer Swiped="OnSwiped" Direction="Right"/>
+            <SwipeGestureRecognizer Swiped="OnSwiped" Direction="Left"/>
+        </Grid.GestureRecognizers>
+        <Label 
+            x:Name="OperatorLabel"
+            Text="1"
+            FontSize="500"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" 
+            VerticalTextAlignment="Center"
+            HorizontalTextAlignment="Center"/>
+    </Grid>
+</ContentPage>
