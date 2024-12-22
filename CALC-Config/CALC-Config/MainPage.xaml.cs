@@ -12,7 +12,7 @@ namespace CALC_Config
     public partial class MainPage : ContentPage
     {
         private TcpServer _server;
-        public static Action<JObject> SendConfig;
+        public static Action<JObject>? SendConfig;
         public MainPage()
         {
             InitializeComponent();
@@ -37,7 +37,6 @@ namespace CALC_Config
         {
             SSID_Label.Text = "SSID: " + ssid;
             IP_Label.Text = "IP: " + ip;
-            // Create a JSON object with the WiFi data
             JObject wifiData = new JObject
             {
                 { "ssid", ssid },
@@ -67,7 +66,7 @@ namespace CALC_Config
                 { "type", "config" },
                 { "sound", Sound_Switch.IsToggled}
             };
-            SendConfig.Invoke(config);
+            SendConfig?.Invoke(config);
             Navigation.PushAsync(new Preview());
         }
 

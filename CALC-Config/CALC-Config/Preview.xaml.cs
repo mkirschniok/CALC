@@ -5,24 +5,23 @@ public partial class Preview : ContentPage
 	private int arg1, arg2;
 	private string operation;
     private string result;
-    private int digitMaxWidth = 0;
 
     public Preview()
 	{
-		InitializeComponent();
+        arg1 = 1;
+        arg2 = 1;
+        operation = "+";
+        result = "2";
+        InitializeComponent();
 		TcpServer.UpdateResult = UpdateResult;
 		TcpServer.UpdateValue = UpdateValue;
-
-        // Get the width of the grid
-        double screenWidth = MainGrid.Width;
-        digitMaxWidth = (int)screenWidth / 5;
     }
 
-    public static Action<string, string> SendResult;
+    public static Action<string, string>? SendResult;
 
 	public void UpdateValue(string role, string value)
     {
-        Device.BeginInvokeOnMainThread(() =>
+        MainThread.BeginInvokeOnMainThread(() =>
         {
             if (role == "arg1")
             {
@@ -76,7 +75,7 @@ public partial class Preview : ContentPage
         }
         Result_Label.Text = result;
         AdjustFontSize(Result_Label);
-        SendResult.Invoke(result, id);
+        SendResult?.Invoke(result, id);
     }
 
     private void AdjustFontSize(Label label)

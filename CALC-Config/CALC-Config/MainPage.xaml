@@ -22,7 +22,7 @@
         <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="SSID: ------------"    x:Name="SSID_Label" FontSize="Large" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" Margin="5"/>
         <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="IP: ------------"      x:Name="IP_Label" FontSize="Large" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" Margin="5"/>
         <Label Grid.Row="2" Grid.Column="0" Text="Hasło" FontSize="Large" Margin="5"/>
-        <Entry Grid.Row="2" Grid.Column="1" x:Name="Password_Entry" Placeholder="Hasło" FontSize="Large" Margin="5" Text="Ntx.vvvv2017!"/>
+        <Entry Grid.Row="2" Grid.Column="1" x:Name="Password_Entry" Placeholder="Hasło" FontSize="Large" Margin="5" Text="HasloDoWiFi123!"/>
 
         <Button Grid.Row="3" Grid.Column="0" Text="Odśwież"     Clicked="Update_Clicked" FontSize="Large" Margin="5"/>
         <Button Grid.Row="3" Grid.Column="1" Text="Generuj QR"  Clicked="Update_Clicked" FontSize="Large" Margin="5"/>
