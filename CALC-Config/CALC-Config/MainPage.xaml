@@ -11,7 +11,6 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -19,18 +18,20 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="SSID: ------------"    x:Name="SSID_Label" FontSize="Large" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" Margin="5"/>
-        <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="IP: ------------"      x:Name="IP_Label" FontSize="Large" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" Margin="5"/>
-        <Label Grid.Row="2" Grid.Column="0" Text="Hasło" FontSize="Large" Margin="5"/>
-        <Entry Grid.Row="2" Grid.Column="1" x:Name="Password_Entry" Placeholder="Hasło" FontSize="Large" Margin="5" Text="HasloDoWiFi123!"/>
+        <Label Grid.Row="0" Grid.Column="0" Text="Nazwa sieci: "                            FontSize="35" HorizontalTextAlignment="End"      VerticalTextAlignment="Center" Margin="5"/>
+        <Label Grid.Row="0" Grid.Column="1" Text="------------"    x:Name="SSID_Label"      FontSize="35" HorizontalTextAlignment="Start"    VerticalTextAlignment="Center" Margin="5"/>
+        <Label Grid.Row="1" Grid.Column="0" Text="Adres IP: "                               FontSize="35" HorizontalTextAlignment="End"      VerticalTextAlignment="Center" Margin="5"/>
+        <Label Grid.Row="1" Grid.Column="1" Text="------------"    x:Name="IP_Label"        FontSize="35" HorizontalTextAlignment="Start"    VerticalTextAlignment="Center" Margin="5"/>
+        <Label Grid.Row="2" Grid.Column="0" Text="Hasło: "                                  FontSize="35" HorizontalTextAlignment="End"      VerticalTextAlignment="Center" Margin="5"/>
+        <Entry Grid.Row="2" Grid.Column="1" Text="HasloDoWiFi123!" x:Name="Password_Entry"  FontSize="35" HorizontalTextAlignment="Start"    VerticalOptions="Center"       Margin="5" Placeholder="Hasło"/>
 
-        <Button Grid.Row="3" Grid.Column="0" Text="Odśwież"     Clicked="Update_Clicked" FontSize="Large" Margin="5"/>
-        <Button Grid.Row="3" Grid.Column="1" Text="Generuj QR"  Clicked="Update_Clicked" FontSize="Large" Margin="5"/>
-        <Button Grid.Row="4" Grid.Column="0" Text="Server" Clicked="Start_Clicked" FontSize="Large" Margin="5"/>
-        <Button Grid.Row="4" Grid.Column="1" Text="Start" Clicked="Start_Clicked" FontSize="Large" Margin="5"/>
+        <Button Grid.Row="3" Grid.Column="0" Text="Odśwież"     Clicked="Update_Clicked"    FontSize="35" Margin="5"/>
+        <Button Grid.Row="3" Grid.Column="1" Text="Generuj QR"  Clicked="Update_Clicked"    FontSize="35" Margin="5"/>
+        <Button Grid.Row="4" Grid.Column="0" Text="Server"      Clicked="Start_Clicked"     FontSize="35" Margin="5"/>
+        <Button Grid.Row="4" Grid.Column="1" Text="Start"       Clicked="Start_Clicked"     FontSize="35" Margin="5"/>
 
-        <Image Grid.Row="0" Grid.RowSpan="3" Grid.Column="2"  x:Name="QRCode_Image" Margin="5"/>
-        <Grid  Grid.Row="0" Grid.RowSpan="3" Grid.Column="3" Margin="5" MaximumHeightRequest="100" HorizontalOptions="Center">
+        <Image Grid.Row="0" Grid.RowSpan="3" Grid.Column="2" Grid.ColumnSpan="2" x:Name="QRCode_Image" Margin="5"/>
+        <Grid  Grid.Row="3" Grid.RowSpan="2" Grid.Column="3" Margin="5" MaximumHeightRequest="100" HorizontalOptions="Center">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
@@ -39,11 +40,11 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Row="0" Grid.ColumnSpan="2" Text="Konfiguracja"/>
-            <Label Grid.Row="1" Grid.Column="0" Text="Dźwięk" VerticalOptions="Center"/>
+            <Label Grid.Row="0" Grid.ColumnSpan="2" Text="Konfiguracja" FontSize="30"/>
+            <Label Grid.Row="1" Grid.Column="0" Text="Dźwięk" VerticalOptions="Center" FontSize="30"/>
             <Switch Grid.Row="1" Grid.Column="1" x:Name="Sound_Switch" IsToggled="True" VerticalOptions="Center"/>
         </Grid>
-        <Label Grid.Row="3" Grid.RowSpan="2" Grid.Column="2" Grid.ColumnSpan="2" Margin="5" Text="Lista urządzeń:" x:Name="DeviceList_Label" FontSize="Medium" HorizontalTextAlignment="Center"/>
+        <Label Grid.Row="3" Grid.RowSpan="2" Grid.Column="2" Margin="5" Text="Lista urządzeń:" x:Name="DeviceList_Label" FontSize="35" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
         
     </Grid>
 

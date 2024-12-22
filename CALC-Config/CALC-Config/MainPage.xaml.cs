@@ -35,8 +35,8 @@ namespace CALC_Config
 
         public void UpdateWiFiData(string ssid, string password, string ip)
         {
-            SSID_Label.Text = "SSID: " + ssid;
-            IP_Label.Text = "IP: " + ip;
+            SSID_Label.Text = ssid;
+            IP_Label.Text = ip;
             JObject wifiData = new JObject
             {
                 { "ssid", ssid },
