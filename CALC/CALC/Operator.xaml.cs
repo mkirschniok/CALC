@@ -20,17 +20,11 @@ public partial class Operator : ContentPage
         this.id = id;
         this.config = config;
         UpdateValue();
-        if (ShakeDetector.Default.IsSupported && !ShakeDetector.Default.IsMonitoring)
-        {
-            ShakeDetector.Default.StartListening();
-            ShakeDetector.Default.IsHapticsEnabled = false;
-            ShakeDetector.Default.ShakeDetected += Detector_ShakeDetected;
-        }
     }
 
-    private void Detector_ShakeDetected(object sender, ShakeDetectedEventArgs e)
+    private void OnTapped(object sender, EventArgs e)
     {
-        if (config["sound"].ToString() == "True") TextToSpeech.SpeakAsync(names[choice]);
+        if (config["sound"]?.ToString() == "True") TextToSpeech.SpeakAsync(names[choice]);
     }
 
     private void OnSwiped(object sender, SwipedEventArgs e)
@@ -51,15 +45,13 @@ public partial class Operator : ContentPage
     {
         SendUpdate.Invoke(config, id, operators[choice]);
         OperatorLabel.Text = operators[choice];
-        if (config["sound"].ToString() == "True") await TextToSpeech.Default.SpeakAsync(names[choice]);
-    }
-    protected override void OnDisappearing()
-    {
-        base.OnDisappearing();
-        if (ShakeDetector.Default.IsMonitoring)
+        if (config["sound"].ToString() == "True")
         {
-            ShakeDetector.Default.StopListening();
-            ShakeDetector.Default.ShakeDetected -= Detector_ShakeDetected;
+#if ANDROID
+            Android.Speech.Tts.TextToSpeech tts = new Android.Speech.Tts.TextToSpeech(Android.App.Application.Context, null);
+            if (tts.IsSpeaking) tts.Stop();
+#endif
+            await TextToSpeech.Default.SpeakAsync(names[choice]);
         }
     }
 }

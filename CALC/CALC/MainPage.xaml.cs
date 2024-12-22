@@ -7,9 +7,6 @@ namespace CALC
 {
     public partial class MainPage : ContentPage
     {
-
-        int code = 0;
-
         public MainPage()
         {
             InitializeComponent();

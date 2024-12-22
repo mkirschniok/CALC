@@ -6,6 +6,7 @@
         <Grid.GestureRecognizers>
             <SwipeGestureRecognizer Swiped="OnSwiped" Direction="Right"/>
             <SwipeGestureRecognizer Swiped="OnSwiped" Direction="Left"/>
+            <TapGestureRecognizer Tapped="OnTapped" />
         </Grid.GestureRecognizers>
         <Label 
             x:Name="OperatorLabel"

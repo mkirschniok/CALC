@@ -3,6 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CALC.Result">
     <Grid>
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OnTapped" />
+        </Grid.GestureRecognizers>
         <Label 
             x:Name="ValueLabel"
             Text="2"
@@ -10,10 +13,6 @@
             VerticalOptions="Center" 
             HorizontalOptions="Center" 
             VerticalTextAlignment="Center"
-            HorizontalTextAlignment="Center">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnLabelTapped" />
-                </Label.GestureRecognizers>
-            </Label>
+            HorizontalTextAlignment="Center"/>
     </Grid>
 </ContentPage>

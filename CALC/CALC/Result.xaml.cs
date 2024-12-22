@@ -19,19 +19,26 @@ public partial class Result : ContentPage
         InitializeComponent();
     }
 
-    private void OnLabelTapped(object sender, EventArgs e)
+    private async void OnTapped(object sender, EventArgs e)
     {
-        if (config["sound"].ToString() == "True") PlaySound();
+
+        if (config["sound"].ToString() == "True")
+        {
+#if ANDROID
+            Android.Speech.Tts.TextToSpeech tts = new Android.Speech.Tts.TextToSpeech(Android.App.Application.Context, null);
+            if (tts.IsSpeaking) tts.Stop();
+#endif
+            PlaySound();
+        }
     }
 
     private async Task ResultReceived(string result)
     {
-        Device.BeginInvokeOnMainThread(() =>
+        MainThread.BeginInvokeOnMainThread(() =>
         {
             this.result = result;
             ValueLabel.Text = result;
             ValueLabel.FontSize = 500 / ValueLabel.Text.Length;
-            if (config["sound"].ToString() == "True") PlaySound();
         });
     }
 

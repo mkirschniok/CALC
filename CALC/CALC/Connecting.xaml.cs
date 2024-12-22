@@ -18,7 +18,7 @@ public partial class Connecting : ContentPage
     public void IDReceived(string id)
     {
         this.id = id;
-        Device.BeginInvokeOnMainThread(() =>
+        MainThread.BeginInvokeOnMainThread(() =>
         {
             Status_Label.Text = "Po³¹czono! \nID urz¹dzenia: " + id;
         });
@@ -26,7 +26,7 @@ public partial class Connecting : ContentPage
 
     public void ConfigReceived(JObject config)
     {
-        Device.BeginInvokeOnMainThread(() =>
+        MainThread.BeginInvokeOnMainThread(() =>
         {
             Status_Label.Text += "\nOtrzymano konfiguracjê";
         if (config["role"].ToString().Contains("arg"))
