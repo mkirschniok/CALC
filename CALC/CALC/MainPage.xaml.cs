@@ -13,12 +13,13 @@ namespace CALC
         public MainPage()
         {
             InitializeComponent();
+            Application.Current.UserAppTheme = AppTheme.Dark;
             Scanner.GotData += JumpToConnectionScreen;
         }
 
         private async void OnScanClicked(object sender, EventArgs e)
         {
-            Device.BeginInvokeOnMainThread(() =>
+            MainThread.BeginInvokeOnMainThread(() =>
             {
                 Navigation.PushAsync(new Scanner());
             });
@@ -26,7 +27,7 @@ namespace CALC
 
         private async void OnManualClicked(object sender, EventArgs e)
         {
-            Device.BeginInvokeOnMainThread(() =>
+            MainThread.BeginInvokeOnMainThread(() =>
             {
                 Navigation.PushAsync(new Manual());
             });
@@ -34,9 +35,9 @@ namespace CALC
 
         private void JumpToConnectionScreen(string ssid, string password, string ip)
         {
-            Device.BeginInvokeOnMainThread(() =>
+            MainThread.BeginInvokeOnMainThread(() =>
             {
-                Navigation.PushAsync(new Connecting(ssid, password, ip));
+                Navigation.PushAsync(new Manual(ssid, password, ip));
             });
         }
     }

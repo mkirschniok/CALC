@@ -14,17 +14,17 @@
 		<!-- For example: <RuntimeIdentifiers>maccatalyst-x64;maccatalyst-arm64</RuntimeIdentifiers> -->
 
 		<OutputType>Exe</OutputType>
-		<RootNamespace>CALC</RootNamespace>
+		<RootNamespace>CALC_Config</RootNamespace>
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 
 		<!-- Display name -->
-		<ApplicationTitle>CALC</ApplicationTitle>
+		<ApplicationTitle>CALC-Config</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.calc</ApplicationId>
+		<ApplicationId>com.companyname.calcconfig</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
@@ -36,10 +36,6 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
-	  <AndroidPackageFormat>apk</AndroidPackageFormat>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -61,51 +57,26 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="AathifMahir.Maui.MauiShakeDetector" Version="2.0.0" />
-		<PackageReference Include="Camera.MAUI" Version="1.5.1" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-		<PackageReference Include="Shiny.BluetoothLE" Version="3.3.3" />
-		<PackageReference Include="Shiny.BluetoothLE.Common" Version="3.3.3" />
-		<PackageReference Include="Shiny.BluetoothLE.Hosting" Version="3.3.3" />
-		<PackageReference Include="Shiny.Hosting.Maui" Version="3.3.3" />
-		<PackageReference Include="ZXing.Net.Maui" Version="0.4.0" />
-		<PackageReference Include="ZXing.Net.Maui.Controls" Version="0.4.0" />
+		<PackageReference Include="Plugin.BluetoothLE" Version="6.3.0.19" />
+		<PackageReference Include="QRCoder" Version="1.6.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Result.xaml.cs">
-	    <DependentUpon>Result.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Scanner.xaml.cs">
-	    <DependentUpon>Scanner.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Operator.xaml.cs">
-	    <DependentUpon>Operator.xaml</DependentUpon>
+	  <Compile Update="Preview.xaml.cs">
+	    <DependentUpon>Preview.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Result.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Connecting.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Manual.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Scanner.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Operator.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Argument.xaml">
+	  <MauiXaml Update="Preview.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
+
+	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionCALCConfigHideInfoBar="True" XamarinHotReloadGenericExceptionInfoBarCALCConfigHideInfoBar="True" /></VisualStudio></ProjectExtensions>
 
 </Project>

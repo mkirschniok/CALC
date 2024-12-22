@@ -10,8 +10,6 @@ namespace CALC;
 
 public partial class Scanner : ContentPage
 {
-    private string ssid, password, ip;
-    private BarcodeResult? previousResult; 
     public Scanner()
 	{
 		InitializeComponent();
@@ -27,19 +25,17 @@ public partial class Scanner : ContentPage
     protected async void BarcodesDetected(object sender, BarcodeDetectionEventArgs e)
     {
         var result = e.Results?.FirstOrDefault();
-        if (result is null || result == previousResult) return;
+        if (result is null) return;
         try
         {
-            // Get data from JSON
-            previousResult = result;
             JObject wifiData = JObject.Parse(result.Value);
-            ssid = wifiData["ssid"].ToString();
-            password = wifiData["password"].ToString();
-            ip = wifiData["ip"].ToString();
-            Device.BeginInvokeOnMainThread(async () => {
+            var ssid = wifiData["ssid"].ToString();
+            var password = wifiData["password"].ToString();
+            var ip = wifiData["ip"].ToString();
+            MainThread.BeginInvokeOnMainThread(async () => {
                 await Navigation.PopAsync();
+                GotData?.Invoke(ssid, password, ip);
             });
-            GotData?.Invoke(ssid, password, ip);
         }
         catch (Exception) { return; }
     }

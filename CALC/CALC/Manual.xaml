@@ -11,9 +11,9 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Label  Grid.Row="0" Text="Podaj dane sieci:"/>
-        <Entry  Grid.Row="1" x:Name="SSID_Entry"       Placeholder="Nazwa sieci" TextChanged="TextUpdate" Text="Michal 2.4GHz"/>
-        <Entry  Grid.Row="2" x:Name="Password_Entry"   Placeholder="Hasło"       TextChanged="TextUpdate" Text="Ntx.vvvv2017!"/>
-        <Entry  Grid.Row="3" x:Name="IP_Entry"         Placeholder="Adres IP"    TextChanged="TextUpdate" Text="192.168.0.122"/>
+        <Entry  Grid.Row="1" x:Name="SSID_Entry"       Placeholder="Nazwa sieci" TextChanged="TextUpdate" Text="CALC"/>
+        <Entry  Grid.Row="2" x:Name="Password_Entry"   Placeholder="Hasło"       TextChanged="TextUpdate" Text="HasloDoWiFi123!"/>
+        <Entry  Grid.Row="3" x:Name="IP_Entry"         Placeholder="Adres IP"    TextChanged="TextUpdate" Text="192.168.200.216"/>
         <Button Grid.Row="4" x:Name="Submit_Button"    Text="Zatwierdź"          Clicked="OnSubmitClicked" IsEnabled="True"/>
     </Grid>
 </ContentPage>

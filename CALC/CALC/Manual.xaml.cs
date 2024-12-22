@@ -14,6 +14,7 @@ public partial class Manual : ContentPage
         Password_Entry.Text = password;
         IP_Entry.Text = ip;
         Submit_Button.IsEnabled = true;
+
     }
 
     public void TextUpdate(object sender, EventArgs e)
@@ -34,7 +35,6 @@ public partial class Manual : ContentPage
         WiFiAndroid wiFiAndroid = new WiFiAndroid();
         wiFiAndroid.ConnectToWifi(SSID_Entry.Text, Password_Entry.Text, IP_Entry.Text);
 #endif
-        // Forward to "Connecting" page
         Navigation.PushAsync(new Connecting(SSID_Entry.Text, Password_Entry.Text, IP_Entry.Text));
     }
 }
