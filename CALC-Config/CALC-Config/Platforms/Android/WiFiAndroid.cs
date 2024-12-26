@@ -1,20 +1,18 @@
 ﻿using Android.App;
-using Android.Content;
 using Android.Net.Wifi;
-using Android.OS;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Google.Crypto.Tink.Shaded.Protobuf;
 
 namespace CALC_Config
 {
+    /// <summary>
+    /// Klasa zawierająca metody do obsługi WiFi na platformie Android
+    /// </summary>
     public static class WiFiAndroid
     {
+        /// <summary>
+        /// Metoda zwracająca SSID aktualnie połączonej sieci WiFi
+        /// </summary>
+        /// <returns>SSID sieci</returns>
         public static string GetSSID()
         {
             WifiManager wifiManager = (WifiManager)Android.App.Application.Context.GetSystemService(Service.WifiService);
@@ -25,6 +23,11 @@ namespace CALC_Config
             }
             return ssid;
         }
+
+        /// <summary>
+        /// Metoda zwracająca lokalny adres IP urządzenia
+        /// </summary>
+        /// <returns>string z adresem IP</returns>
         public static string GetLocalIPAddress()
         {
             WifiManager wifiManager = (WifiManager)Android.App.Application.Context.GetSystemService(Service.WifiService);
@@ -33,13 +36,13 @@ namespace CALC_Config
             return result;
         }
 
+        /// <summary>
+        /// Metoda sprawdzająca i żądająca uprawnień do lokalizacji (wymagane do pobrania SSID)
+        /// </summary>
         public static async void CheckAndRequestPermissions()
         {
             PermissionStatus status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
-            if (status != PermissionStatus.Granted)
-            {
-                status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
-            }
+            if (status != PermissionStatus.Granted) status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
         }
     }
 }

@@ -1,34 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Sockets;
-using System.Net;
+﻿using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 using System.Net.WebSockets;
-using System.Net.Http.Json;
 using Newtonsoft.Json.Linq;
-
-
 #if ANDROID
 using Android.Widget;
 #endif
 
 namespace CALC_Config
 {
+    /// <summary>
+    /// Klasa odpowiedzialna za logikę serwera WebSocket.
+    /// </summary>
     public class TcpServer
     {
-        private HttpListener _httpListener;
+        /// <summary>
+        /// HttpListener serwera
+        /// </summary>
+        private HttpListener? _httpListener;
+        /// <summary>
+        /// Słownik (lista) klientów połączonych z serwerem - klucz to identyfikator klienta, wartość to obiekt WebSocket
+        /// </summary>
         public Dictionary<string, WebSocket> _clients = new();
+        /// <summary>
+        /// Delegat wywoływany po dodaniu nowego urządzenia
+        /// </summary>
         public static Action DeviceAdded = delegate { };
-        public static Action<string, string> UpdateValue;
-        public static Action<string> UpdateResult;
+        /// <summary>
+        /// Akcja wywoływana po otrzymaniu nowej wartości (liczby lub operatora)
+        /// </summary>
+        public static Action<string?, string?>? UpdateValue;
 
+        /// <summary>
+        /// Konstruktor klasy TcpServer, dodaje obsługę zdarzenia wysłania konfiguracji i wyniku
+        /// </summary>
         public TcpServer()
         {
             MainPage.SendConfig += async (config) => await SendConfig(config);
             Preview.SendResult += async (result, id) => await SendResult(result, id);
         }
+
+        /// <summary>
+        /// Metoda uruchamiająca serwer WebSocket
+        /// </summary>
         public async void StartServer()
         {
             _httpListener = new HttpListener();
@@ -43,8 +56,6 @@ namespace CALC_Config
                 {
                     var wsContext = await context.AcceptWebSocketAsync(null);
                     var clientSocket = wsContext.WebSocket;
-                    // Send the client its ID
-                    // Create a JSON object with the client ID
                     JObject id = new JObject
                     {
                         { "type", "id" },
@@ -65,6 +76,12 @@ namespace CALC_Config
             }
         }
 
+        /// <summary>
+        /// Metoda obsługująca komunikację z klientem
+        /// </summary>
+        /// <param name="clientSocket">obiekt WebSocket</param>
+        /// <param name="id">identyfikator klienta</param>
+        /// <returns></returns>
         private async Task HandleClient(WebSocket clientSocket, string id)
         {
             var buffer = new byte[1024 * 4];
@@ -79,33 +96,20 @@ namespace CALC_Config
                 else
                 {
                     var message = Encoding.UTF8.GetString(buffer, 0, result.Count);
-                    // Convert the message from JSON to a string
                     JObject json = JObject.Parse(message);
-                    if (json["type"].ToString() == "update")
+                    if (json["type"]?.ToString() == "update")
                     {
-                        UpdateValue.Invoke(json["role"].ToString(), json["value"].ToString());
+                        UpdateValue?.Invoke(json["role"]?.ToString(), json["value"]?.ToString());
                     }
-                    else if (json["type"].ToString() == "request")
-                    {
-                        UpdateResult.Invoke(json["id"].ToString());
-                    }
-                    await BroadcastMessage(message);
                 }
             }
         }
 
-        private async Task BroadcastMessage(string message)
-        {
-            foreach (var client in _clients.ToList())
-            {
-                if (client.Value.State == WebSocketState.Open)
-                {
-                    var bytes = Encoding.UTF8.GetBytes(message);
-                    await client.Value.SendAsync(new ArraySegment<byte>(bytes), WebSocketMessageType.Text, true, CancellationToken.None);
-                }
-            }
-        }
-
+        /// <summary>
+        /// Metoda wysyłająca konfigurację do wszystkich klientów
+        /// </summary>
+        /// <param name="config">obiekt JSON z danymi konfiguracji</param>
+        /// <returns></returns> 
         public async Task SendConfig(JObject config)
         {
             int i = 0;
@@ -125,6 +129,12 @@ namespace CALC_Config
             }
         }
 
+        /// <summary>
+        /// Metoda wysyłająca wynik do urządzenia o podanym identyfikatorze
+        /// </summary>
+        /// <param name="result">string z wynikiem</param>
+        /// <param name="id">identyfikator urządzenia</param>
+        /// <returns></returns>
         public async Task SendResult(string result, string id)
         {
             WebSocket client = _clients[id];
@@ -137,11 +147,14 @@ namespace CALC_Config
             await client.SendAsync(new ArraySegment<byte>(bytes), WebSocketMessageType.Text, true, CancellationToken.None);
         }
 
+        /// <summary>
+        /// Metoda wyświetlająca komunikat (Toast na Androidzie) na ekranie
+        /// </summary>
+        /// <param name="message">wiadomość</param>
         private void DisplayMessage(string message)
         {
-            // Generate a toast message
 #if ANDROID
-            Toast.MakeText(Android.App.Application.Context, message, ToastLength.Short).Show();
+            Toast.MakeText(Android.App.Application.Context, message, ToastLength.Short)?.Show();
 #endif
         }
     }

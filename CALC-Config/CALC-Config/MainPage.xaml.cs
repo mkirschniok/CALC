@@ -1,67 +1,82 @@
-﻿using System.Reactive.Linq;
-using Microsoft.Maui.Controls.PlatformConfiguration;
-using System.Net.NetworkInformation;
-using System.Net.WebSockets;
-using System.Net.Sockets;
-using QRCoder;
-using System.Net;
+﻿using QRCoder;
 using Newtonsoft.Json.Linq;
 
 namespace CALC_Config
 {
+    /// <summary>
+    /// Klasa strony głównej aplikacji
+    /// </summary>
     public partial class MainPage : ContentPage
     {
-        private TcpServer _server;
+        /// <summary>
+        /// Obiekt serwera WebSocket
+        /// </summary>
+        private readonly TcpServer _server;
+        /// <summary>
+        /// Dane sieci WiFi i adres IP
+        /// </summary>
+        private string? ssid, password, ip;
+        /// <summary>
+        /// Akcja wysyłająca konfigurację do urządzeń
+        /// </summary>
         public static Action<JObject>? SendConfig;
+
+        /// <summary>
+        /// Konsktruktor klasy MainPage
+        /// </summary>
         public MainPage()
         {
             InitializeComponent();
-            // Poproś o uprawnienia do lokalizacji (wymagane do uzyskania nazwy sieci WiFi)
 #if ANDROID
             WiFiAndroid.CheckAndRequestPermissions();
 #endif
             _server = new TcpServer();
-            _server.StartServer();
             TcpServer.DeviceAdded += UpdateDeviceList;
-
         }
 
+        /// <summary>
+        /// Aktualiacja danych sieci WiFi i adresu IP
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Update_Clicked(object sender, EventArgs e)
         {
 #if ANDROID
-            UpdateWiFiData(WiFiAndroid.GetSSID(), Password_Entry.Text, WiFiAndroid.GetLocalIPAddress());
+            ssid = WiFiAndroid.GetSSID();
+            ip = WiFiAndroid.GetLocalIPAddress();
 #endif
-        }
-
-        public void UpdateWiFiData(string ssid, string password, string ip)
-        {
+            password = Password_Entry.Text;
             SSID_Label.Text = ssid;
             IP_Label.Text = ip;
-            JObject wifiData = new JObject
+        }
+
+        /// <summary>
+        /// Generowanie kodu QR z danymi sieci WiFi
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Generate_Clicked(object sender, EventArgs e)
+        {
+            JObject wifiData = new()
             {
                 { "ssid", ssid },
                 { "password", password },
                 { "ip", ip }
             };
-            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+            QRCodeGenerator qrGenerator = new();
             QRCodeData qrCodeData = qrGenerator.CreateQrCode(wifiData.ToString(), QRCodeGenerator.ECCLevel.Q);
-            PngByteQRCode qrCode = new PngByteQRCode(qrCodeData);
+            PngByteQRCode qrCode = new(qrCodeData);
             QRCode_Image.Source = ImageSource.FromStream(() => new MemoryStream(qrCode.GetGraphic(20)));
         }
 
-        public void UpdateDeviceList()
-        {
-            string text = "Lista urządzeń: \n";
-            foreach (string device in _server._clients.Keys)
-            {
-                text += "ID: " + device + '\n';
-            }
-            DeviceList_Label.Text = text;
-        }
-
+        /// <summary>
+        /// Uruchomienie kalulatora
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void Start_Clicked(object sender, EventArgs e)
         {
-            JObject config = new JObject
+            JObject config = new()
             {
                 { "type", "config" },
                 { "sound", Sound_Switch.IsToggled}
@@ -70,7 +85,33 @@ namespace CALC_Config
             Navigation.PushAsync(new Preview());
         }
 
+        /// <summary>
+        /// Włączenie serwera WebSocket
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Server_Clicked(object sender, EventArgs e)
+        {
+            _server.StartServer();
+            Server_Button.IsEnabled = false;
+            Server_Button.Text = "Serwer: ON";
+        }
+
+        /// <summary>
+        /// Aktualizacja listy podłączonych urządzeń
+        /// </summary>
+        public void UpdateDeviceList()
+        {
+            string text = "Lista urządzeń: \n";
+            foreach (string device in _server._clients.Keys)
+            {
+                text += "ID: " + device + '\n';
+            }
+            DeviceList_Label.Text = text;
+            if (_server._clients.Count == 4)
+            {
+                Start_Button.IsEnabled = true;
+            }
+        }
     }
-
-
 }

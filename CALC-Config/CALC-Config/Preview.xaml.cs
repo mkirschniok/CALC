@@ -1,11 +1,27 @@
 namespace CALC_Config;
 
+
+/// <summary>
+/// Ekran podgl¹du kalkulatora
+/// </summary>
 public partial class Preview : ContentPage
 {
+    /// <summary>
+    /// Wartoœæ pierwszego i drugiego argumentu
+    /// </summary>
 	private int arg1, arg2;
+    /// <summary>
+    /// Znak operacji
+    /// </summary>
 	private string operation;
+    /// <summary>
+    /// Wynik operacji
+    /// </summary>
     private string result;
 
+    /// <summary>
+    /// Konstruktor klasy, domyœlne dzia³anie: 1 + 1 = 2
+    /// </summary>
     public Preview()
 	{
         arg1 = 1;
@@ -13,12 +29,19 @@ public partial class Preview : ContentPage
         operation = "+";
         result = "2";
         InitializeComponent();
-		TcpServer.UpdateResult = UpdateResult;
 		TcpServer.UpdateValue = UpdateValue;
     }
 
+    /// <summary>
+    /// Akcja wysy³aj¹ca wynik
+    /// </summary>
     public static Action<string, string>? SendResult;
 
+    /// <summary>
+    /// Metoda aktualizuj¹ca wartoœæ argumentów i wynik
+    /// </summary>
+    /// <param name="role">rola telefonu, od którego przysz³a wartoœæ</param>
+    /// <param name="value">rartoœæ, jak¹ przes³a³ telefon</param>
 	public void UpdateValue(string role, string value)
     {
         MainThread.BeginInvokeOnMainThread(() =>
@@ -45,6 +68,10 @@ public partial class Preview : ContentPage
         });
     }
 
+    /// <summary>
+    /// Aktualizacja wyniku
+    /// </summary>
+    /// <param name="id">identyfikator telefonu, do którego nale¿y przes³aæ wynik</param>
     public void UpdateResult(string id)
     {
         switch (operation)
@@ -78,6 +105,10 @@ public partial class Preview : ContentPage
         SendResult?.Invoke(result, id);
     }
 
+    /// <summary>
+    /// Metoda dostosowuj¹ca rozmiar czcionki
+    /// </summary>
+    /// <param name="label">etykieta, której czcionkê nale¿y dopasowaæ</param>
     private void AdjustFontSize(Label label)
     {
         label.FontSize = 300 / label.Text.Length;
