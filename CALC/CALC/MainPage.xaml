@@ -30,6 +30,13 @@
                 HorizontalOptions="Fill"
                 VerticalOptions="CenterAndExpand"
                 BackgroundColor="#C0DAF2"/>
+
+            <Label
+                Text="Autor: Michał Kirschniok, wersja 1.0"
+                FontSize="Medium"
+                VerticalOptions="End"
+                VerticalTextAlignment="End"
+                HorizontalTextAlignment="Center"/>
         </VerticalStackLayout>
     </ScrollView>
 
