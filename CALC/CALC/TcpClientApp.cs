@@ -1,31 +1,46 @@
 ﻿#if ANDROID
 using Android.Widget;
 #endif
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Sockets;
+using Newtonsoft.Json.Linq;
 using System.Net.WebSockets;
 using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 
 namespace CALC
 {
+    /// <summary>
+    /// Klasa klienta TCP (WebSocket)
+    /// </summary>
     public class TcpClientApp
     {
-        private ClientWebSocket _webSocket;
-        public static Action<string> IDReceived;
-        public static Action<JObject> ConfigReceived;
-        public static Action<string> ResultReceived;
+        /// <summary>
+        /// Klient WebSocket
+        /// </summary>
+        private ClientWebSocket         _webSocket;
+        /// <summary>
+        /// Akcja wywoływana po otrzymaniu identyfikatora
+        /// </summary>
+        public static Action<string>?   IDReceived;
+        /// <summary>
+        /// Akcja wywoływana po otrzymaniu konfiguracji
+        /// </summary>
+        public static Action<JObject>?  ConfigReceived;
+        /// <summary>
+        /// Akcja wywoływana po otrzymaniu wyniku
+        /// </summary>
+        public static Action<string>?   ResultReceived;
 
+        /// <summary>
+        /// Konstruktor klasy TcpClientApp
+        /// </summary>
         public TcpClientApp()
         {
             Argument.SendUpdate += async (config, id, value) => await SendUpdate(config, id, value);
             Operator.SendUpdate += async (config, id, value) => await SendUpdate(config, id, value);
-            Result.RequestUpdate += async id => await RequestUpdate(id);
         }
+        /// <summary>
+        /// Metoda łącząca z tabletem
+        /// </summary>
+        /// <param name="ip">adres IP jako string</param>
         public async void ConnectToServer(string ip)
         {
             _webSocket = new ClientWebSocket();
@@ -41,6 +56,10 @@ namespace CALC
             }
         }
 
+        /// <summary>
+        /// Metoda nasłuchująca serwera
+        /// </summary>
+        /// <returns></returns>
         private async Task ListenToServer()
         {
             var buffer = new byte[1024 * 4];
@@ -71,6 +90,10 @@ namespace CALC
             }
         }
 
+        /// <summary>
+        /// Metoda wysyłająca wiadomość
+        /// </summary>
+        /// <param name="message"></param>
         private async void SendMessage(string message)
         {
             if (_webSocket.State == WebSocketState.Open)
@@ -80,6 +103,13 @@ namespace CALC
             }
         }
 
+        /// <summary>
+        /// Metoda wysyłająca aktualizację danych
+        /// </summary>
+        /// <param name="config">obiekt konfiguracji</param>
+        /// <param name="id">identyfikator urządzenia</param>
+        /// <param name="value">wartość do zaktualizowania</param>
+        /// <returns></returns>
         private async Task SendUpdate(JObject config, string id, string value)
         {
             JObject message = new JObject
@@ -92,17 +122,10 @@ namespace CALC
             SendMessage(message.ToString());
         }
 
-        private async Task RequestUpdate(string id)
-        {
-            JObject message = new JObject
-            {
-                { "type", "request" },
-                { "id", id }
-            };
-            var test = message.ToString();
-            SendMessage(message.ToString());
-        }
-
+        /// <summary>
+        /// Metoda wyświetlająca wiadomość na ekranie (Toast na Androidzie)
+        /// </summary>
+        /// <param name="message">wiadomość</param>
         private void DisplayMessage(string message)
         {
 #if ANDROID

@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CALC.MainPage">
+             x:Class="CALC.MainPage"
+             BackgroundColor="#101B24">
 
     <ScrollView
         VerticalOptions="CenterAndExpand">
@@ -10,13 +11,8 @@
             Spacing="25"
             VerticalOptions="CenterAndExpand">
 
-            <Label
-                Text="CALC"
-                Style="{StaticResource Headline}"
-                FontSize="100" 
-                LineBreakMode="WordWrap"
-                MaxLines="2"
-                VerticalOptions="CenterAndExpand"/>
+            <Image
+                Source="logo.png"/>
 
             <Button
                 x:Name="Scan_Btn"
@@ -24,14 +20,16 @@
                 SemanticProperties.Hint="Zeskanuj kod QR"
                 Clicked="OnScanClicked"
                 HorizontalOptions="Fill"
-                VerticalOptions="CenterAndExpand"/>
+                VerticalOptions="CenterAndExpand"
+                BackgroundColor="#C0DAF2"/>
             <Button
                 x:Name="Manual_Btn"
                 Text="Wprowadź dane sieci ręcznie" 
                 SemanticProperties.Hint="Wprowadź dane sieci ręcznie"
                 Clicked="OnManualClicked"
                 HorizontalOptions="Fill"
-                VerticalOptions="CenterAndExpand"/>
+                VerticalOptions="CenterAndExpand"
+                BackgroundColor="#C0DAF2"/>
         </VerticalStackLayout>
     </ScrollView>
 

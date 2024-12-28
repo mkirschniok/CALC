@@ -2,9 +2,22 @@ using Newtonsoft.Json.Linq;
 
 namespace CALC;
 
+/// <summary>
+/// Klasa ekranu ³¹czenia z urz¹dzeniem
+/// </summary>
 public partial class Connecting : ContentPage
 {
+    /// <summary>
+    /// Parametry po³¹czenia, id urz¹dzenia
+    /// </summary>
     private string ssid, password, ip, id;
+
+    /// <summary>
+    /// Konstruktor klasy
+    /// </summary>
+    /// <param name="ssid">nazwa sieci</param>
+    /// <param name="password">has³o</param>
+    /// <param name="ip">adres ip jako string</param>
     public Connecting(string ssid, string password, string ip)
 	{
 		InitializeComponent();
@@ -15,6 +28,10 @@ public partial class Connecting : ContentPage
         TcpClientApp.ConfigReceived += ConfigReceived;
     }
 
+    /// <summary>
+    /// Metoda wywo³ywana po uzyskaniu id urz¹dzenia
+    /// </summary>
+    /// <param name="id">identyfikator urz¹dzenia</param>
     public void IDReceived(string id)
     {
         this.id = id;
@@ -24,6 +41,10 @@ public partial class Connecting : ContentPage
         });
     }
 
+    /// <summary>
+    /// Metoda wywo³ywana po otrzymaniu konfiguracji
+    /// </summary>
+    /// <param name="config">obiekt konfiguracji</param>
     public void ConfigReceived(JObject config)
     {
         MainThread.BeginInvokeOnMainThread(() =>

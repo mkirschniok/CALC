@@ -1,7 +1,6 @@
 ﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
-using Android.Runtime;
 using AndroidX.AppCompat.App;
 
 namespace CALC
@@ -13,6 +12,7 @@ namespace CALC
         {
             base.OnCreate(savedInstanceState);
             AppCompatDelegate.DefaultNightMode = AppCompatDelegate.ModeNightYes;
+            RequestedOrientation = ScreenOrientation.Portrait;
         }
 
     }
