@@ -24,4 +24,4 @@ Konieczne jest połączenie z tą samą siecią Wi-Fi.
 Wymagane jest udzielenie aplikacji odpowiednich uprawnień - dostęp do aparatu i lokalizacji (celem odczytu nazwy sieci Wi-Fi).
 
 ## Licencja
-Aplikacja CALC2 jest udostępniana na licencji MIT. Więcej informacji na temat licencji można znaleźć w pliku LICENSE.
+Aplikacja CALC jest udostępniana na licencji MIT. Więcej informacji na temat licencji można znaleźć w pliku LICENSE.
