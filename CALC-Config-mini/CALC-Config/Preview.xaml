@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CALC_Config.Preview"
+             Background="#101B24">
+    <Grid x:Name="MainGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Label Text="1" x:Name="Arg1_Label" Grid.Column="0" FontSize="200" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+        <Label Text="+" x:Name="Oper_Label" Grid.Column="1" FontSize="200" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+        <Label Text="1" x:Name="Arg2_Label" Grid.Column="2" FontSize="200" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+        <Label Text="="                     Grid.Column="3" FontSize="200" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+        <Label Text="2" x:Name="Result_Label" Grid.Column="4" FontSize="200" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+    </Grid>
+</ContentPage>
